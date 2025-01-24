@@ -1,5 +1,5 @@
 """
-ASGI config for Arranchamento_ESG project.
+ASGI config for Rancho_ESG project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Arranchamento_ESG.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Rancho_ESG.settings')
 
 application = get_asgi_application()

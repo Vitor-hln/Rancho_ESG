@@ -1,1 +1,1 @@
-from usuarios_views import cadastro
+from .usuarios_views import UsuarioView

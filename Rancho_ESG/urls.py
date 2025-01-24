@@ -1,5 +1,5 @@
-"""
-URL configuration for Arranchamento_ESG project.
+
+"""URL configuration for Rancho_ESG project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -12,18 +12,18 @@ Class-based views
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from tkinter.font import names
-
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))"""
 from django.contrib import admin
 from django.urls import path
 from contas.views.views import home
-from Usuarios.views import cadastro
+from Usuarios.views import UsuarioView
+from users_registration.views import registration_view
+from django.contrib.auth import views as auth_views # view de login embutida do Django
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', home),
-    path('cadastro/', cadastro),
-
+    path('cadastro/', UsuarioView.as_view()),
+    path('registro/', registration_view, name="registration"),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'), # view de login embutida do Django
 ]

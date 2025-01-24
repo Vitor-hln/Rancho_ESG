@@ -18,7 +18,6 @@ class Usuario(models.Model):
                             blank = False,
                             verbose_name = "Nome")
     matricula = models.CharField(max_length= 30, verbose_name = "Matricula")
-    data_criacao = models.DateField(auto_now_add=True)
     email = models.EmailField(max_length = 254,
                              unique=True,
                              null=False,

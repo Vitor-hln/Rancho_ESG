@@ -1,5 +1,5 @@
 from django import forms
-from  models.usuarios_models import  Usuario
+from  Usuarios.models import  Usuario
 
 class CadastroForm(forms.ModelForm):
     class Meta:
