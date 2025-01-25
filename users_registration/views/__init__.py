@@ -1,1 +1,1 @@
-from .views import registration_view
+from .registration_views import registration_view

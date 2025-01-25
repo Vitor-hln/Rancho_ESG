@@ -36,17 +36,7 @@ class Meta:
 
 
 class RegistrationForm(UserCreationForm):
-    nome = forms.CharField(
-        max_length=100,
-        label="Nome",
-        widget=forms.TextInput(attrs={"id": "id_nome", "class": "form-control"}),
-    )
-    matricula = forms.CharField(
-        max_length=10,
-        min_length=10,
-        label="Matrícula",
-        widget=forms.TextInput(attrs={"id": "id_matricula", "class": "form-control"}),
-    )
+
     email = forms.EmailField(
         required=True,
         label="E-mail Institucional",
@@ -58,7 +48,7 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
         widgets = {
             'username': forms.TextInput(attrs={"id": "id_username", "class": "form-control"}),
             'password1': forms.PasswordInput(attrs={"id": "id_password1", "class": "form-control"}),
@@ -69,11 +59,7 @@ class RegistrationForm(UserCreationForm):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
         user.first_name = self.cleaned_data['nome']  # Salvando o nome no campo first_name
-
-        # Salvar matrícula como um atributo customizado em outro modelo ou banco de dados
-        matricula = self.cleaned_data.get('matricula')  # Recuperando a matrícula
-        # Aqui, você pode salvar em outro modelo ou processá-la
-
+    
         if commit:
             user.save()
 

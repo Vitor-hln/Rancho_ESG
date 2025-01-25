@@ -1,7 +1,0 @@
-from django.contrib import admin
-from contas.models.models import Categoria 
-from contas.models.models import Transacao
-
-admin.site.register(Categoria)
-admin.site.register(Transacao)
-# Register your models here.
