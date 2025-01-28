@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from users_registration.forms import RegistrationForm
+from app_accounts.forms import RegistrationForm
 
 def registration_view(request):
     if request.method == "POST":
@@ -8,8 +8,9 @@ def registration_view(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Cadastro realizado com sucesso. /n Você será redirecionado para a página de login!")
-            return redirect("login.html") # Nome da URL de LOGIN
-
+            return redirect("login_page") # Nome da URL de LOGIN
+        else: 
+            print(form.errors)
     else:
         form=RegistrationForm()
 

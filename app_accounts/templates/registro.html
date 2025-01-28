@@ -92,8 +92,12 @@
         <form method="post" class="mb-3">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="id_nome" class="form-label">Nome:</label>
-                <input type="text" name="nome" id="id_nome" class="form-control">
+                <label for="id_first_name" class="form-label">Nome:</label>
+                <input type="text" name="first_name" id="id_first_name" class="form-control">  <!-- Fixed name attribute -->
+            </div>
+            <div class="mb-3">
+                <label for="id_last_name" class="form-label">Sobrenome:</label>
+                <input type="text" name="last_name" id="id_last_name" class="form-control">
             </div>
             <div class="mb-3">
                 <label for="id_username" class="form-label">Matricula/Login:</label>
