@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.validators import validate_email
+from django.utils.translation import gettext_lazy as _
 
 # Utilizar após saber o dominio do e-mail utilizado na ESG
 """from django.core.exceptions import ValidationError    
@@ -17,28 +18,28 @@ def validar_email_personalizado(value):
 class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(
         required=True,
-        label="Nome",
+        label=_("Nome"),
         max_length=50,
         widget=forms.TextInput(attrs={"id": "id_first_name", "class": "form-control"}),
     )
 
     last_name = forms.CharField(
         required=True,
-        label="Sobrenome",
+        label=_("Sobrenome"),
         max_length=50,
         widget=forms.TextInput(attrs={"id": "id_last_name", "class": "form-control"}),
     )
 
     username = forms.CharField(
         required=True,
-        label="Matrícula/Login",
+        label=_("Matrícula/Login"),
         max_length=10,  # Ajuste o tamanho de acordo com a necessidade
         widget=forms.TextInput(attrs={"id": "id_matricula", "class": "form-control"}),
     )
 
     email = forms.EmailField(
         required=True,
-        label="E-mail Institucional",
+        label=_("E-mail Institucional"),
         max_length=254,
         validators=[validate_email],
         error_messages={"invalid": "Insira um e-mail válido"},

@@ -16,108 +16,129 @@
         }
 
         .container {
-            background-color: white;
-            padding: 30px;
+            max-width: 400px; /* Reduz o tamanho do formulário */
+            padding: 20px;
+            background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-            text-align: center; /* Centraliza o conteúdo dentro da página */
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centraliza todos os itens horizontalmente */
         }
 
-        form div {
-            margin-bottom: 15px; /* Espaçamento entre os campos */
-            width: 100%; /* Garante que os campos ocupem a largura do container */
-        }
-
-        label {
-            display: block; /* Coloca o rótulo em uma linha separada */
-            font-weight: bold;
-            text-align: center; /* Centraliza o texto dos rótulos */
-        }
-
-        input {
-            width: 50%; /* Metade da largura */
-            height: 75%; /* 75% da altura padrão */
-            padding: 8px;
-            margin: 0 auto; /* Centraliza o input */
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            display: block;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 50%; /* Igual aos campos */
-            margin: 20px auto; /* Centraliza o botão */
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
+        .btn-primary,
         .btn-secondary {
-            width: 24%; /* Largura */
-            padding: 8px 16px; /* Altura e largura interna */
-            padding-top: 10px
-            margin-top: 0px;
-            background-color: #404040;
-            color: white;
+            width: 80px; /* Define um tamanho fixo para ambos os botões */
+            padding: 5px; /* Ajusta o preenchimento interno */
+            font-size: 12px; /* Reduz o tamanho do texto */
+            margin: 5px auto; /* Centraliza os botões */
+            display: block; /* Garante que cada botão fique em sua própria linha */
             text-align: center;
-            text-decoration: none;
-            border-radius: 4px;
-            margin: -20px auto; /* Centraliza o botão */
+        }
+        S
+        .form-control {
+            font-size: 14px; /* Ajusta o tamanho do texto nos campos */
         }
 
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
+        .text-danger {
+            color: red;
+            font-size: 12px; /* Reduz o tamanho do texto de erro */
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <form method="post" class="mb-3">
+        <form method="post">
             {% csrf_token %}
+
+            <!-- Display non-field errors -->
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- First Name Field -->
             <div class="mb-3">
                 <label for="id_first_name" class="form-label">Nome:</label>
-                <input type="text" name="first_name" id="id_first_name" class="form-control">  <!-- Fixed name attribute -->
+                <input type="text" name="first_name" id="id_first_name" class="form-control" value="{{ form.first_name.value|default:'' }}">
+                {% if form.first_name.errors %}
+                    <div class="text-danger">
+                        {% for error in form.first_name.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
+
+            <!-- Last Name Field -->
             <div class="mb-3">
                 <label for="id_last_name" class="form-label">Sobrenome:</label>
-                <input type="text" name="last_name" id="id_last_name" class="form-control">
+                <input type="text" name="last_name" id="id_last_name" class="form-control" value="{{ form.last_name.value|default:'' }}">
+                {% if form.last_name.errors %}
+                    <div class="text-danger">
+                        {% for error in form.last_name.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
+
+            <!-- Username Field -->
             <div class="mb-3">
-                <label for="id_username" class="form-label">Matricula/Login:</label>
-                <input type="text" name="username" id="id_username" class="form-control">
+                <label for="id_username" class="form-label">Matrícula/Login:</label>
+                <input type="text" name="username" id="id_username" class="form-control" value="{{ form.username.value|default:'' }}">
+                {% if form.username.errors %}
+                    <div class="text-danger">
+                        {% for error in form.username.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
+
+            <!-- Email Field -->
             <div class="mb-3">
                 <label for="id_email" class="form-label">E-mail:</label>
-                <input type="email" name="email" id="id_email" class="form-control">
+                <input type="email" name="email" id="id_email" class="form-control" value="{{ form.email.value|default:'' }}">
+                {% if form.email.errors %}
+                    <div class="text-danger">
+                        {% for error in form.email.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
+
+            <!-- Password1 Field -->
             <div class="mb-3">
                 <label for="id_password1" class="form-label">Senha:</label>
                 <input type="password" name="password1" id="id_password1" class="form-control">
+                {% if form.password1.errors %}
+                    <div class="text-danger">
+                        {% for error in form.password1.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
+
+            <!-- Password2 Field -->
             <div class="mb-3">
                 <label for="id_password2" class="form-label">Confirmação de Senha:</label>
                 <input type="password" name="password2" id="id_password2" class="form-control">
+                {% if form.password2.errors %}
+                    <div class="text-danger">
+                        {% for error in form.password2.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
+
             <button type="submit" class="btn btn-primary">Registrar</button>
+            <a href="{% url 'login_page' %}" class="btn btn-secondary">Login</a>
         </form>
-        <a href="{% url 'login_page' %}" class="btn btn-secondary">Login</a>
     </div>
 </body>
 </html>
