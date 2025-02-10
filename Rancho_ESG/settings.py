@@ -109,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'app_accounts.CustomUser'
+AUTH_USER_MODEL = 'self'
 
 
 # Internationalization
