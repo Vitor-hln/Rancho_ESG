@@ -6,4 +6,4 @@ class CustomUser(AbstractUser):
     is_customer = models.BooleanField(default=True)       # Grupo 2: Faz reservas
 
     def __str__(self):
-        return self.usernames
+        return self.username

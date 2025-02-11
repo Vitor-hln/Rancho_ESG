@@ -1,1 +1,1 @@
-
+from .models import CustomUser  # Exporta o modelo CustomUser

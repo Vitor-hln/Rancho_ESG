@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'app_accounts',
     'app_menu',
 ]
+AUTH_USER_MODEL = 'app_accounts.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -109,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'self'
+
 
 
 # Internationalization

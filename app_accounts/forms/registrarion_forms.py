@@ -1,5 +1,5 @@
 from django import forms
-from django.db import models
+from app_accounts.models import CustomUser
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import  AbstractUser
 #from django.core.validators import validate_email
@@ -17,14 +17,9 @@ def validar_email_personalizado(value):
             params={'value': value},
         )"""
 
-class CustomUser(AbstractUser):
-    is_menu_manager = models.BooleanField(default=False)
-    is_customer = models.BooleanField(default=False)
-
 class RegistrationForm(UserCreationForm):
     is_menu_manager = forms.BooleanField(required=False, label="Gerente de Cardápio")
     is_customer = forms.BooleanField(required=False, label="Cliente")
-
 
     first_name = forms.CharField(
         required=True,
@@ -43,7 +38,7 @@ class RegistrationForm(UserCreationForm):
     username = forms.CharField(
         required=True,
         label=_("Matrícula/Login"),
-        max_length=10,  # Ajuste o tamanho de acordo com a necessidade
+        max_length=10,
         widget=forms.TextInput(attrs={"id": "id_matricula", "class": "form-control"}),
     )
 
@@ -51,43 +46,37 @@ class RegistrationForm(UserCreationForm):
         required=True,
         label=_("E-mail Institucional"),
         max_length=254,
-        #validators=[validate_email],
-        #error_messages={"invalid": "Insira um e-mail válido"},
         widget=forms.EmailInput(attrs={"id": "id_email", "class": "form-control"}),
     )
 
     class Meta:
-        model = CustomUser
+        model = CustomUser  # Use o modelo CustomUser
         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
         widgets = {
-            'password1': forms.PasswordInput(attrs={"id": "id_password1", "class": "form-control"}), # Widget de senha
-            'password2': forms.PasswordInput(attrs={"id": "id_password2", "class": "form-control"}), # Widget de confirmação de senha
+            'password1': forms.PasswordInput(attrs={"id": "id_password1", "class": "form-control"}),
+            'password2': forms.PasswordInput(attrs={"id": "id_password2", "class": "form-control"}),
         }
-   
-    def save(self, commit=True): # Função para salvar o formulario:
-       user = super().save(commit=False)  # Salva parcialmente o objeto User
-       user.email = self.cleaned_data['email']  # Captura o e-mail
-       user.first_name = self.cleaned_data['first_name']  # Captura o primeiro nome
-       user.last_name = self.cleaned_data['last_name']  # Captura o sobrenome (separado)
 
-        # Defina valores padrão ou deixe para o admin definir
-       user.is_menu_manager = False  # Padrão: não é gerente de cardápio
-       user.is_customer = True       # Padrão: é cliente      
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.is_menu_manager = self.cleaned_data['is_menu_manager']
+        user.is_customer = self.cleaned_data['is_customer']
 
-      
-       if commit: # Se commit=True, salva no banco de dados
+        if commit:
             user.save()
-       return user # Retorna o objeto User
-    
-    def clean_username(self): # Validação de cadastros Únicos
-        username = self.cleaned_data['username']
-        if User.objects.filter(username=username).exists():
-            raise forms.ValidationError("Esta matricula já está cadastrada.")
-        return username
-    
-    def clean_email(self):
+        return user
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if CustomUser.objects.filter(username=username).exists():
+            raise forms.ValidationError("Esta matrícula já está cadastrada.")
+        return username
+
+    def clean_email(self):
         email = self.cleaned_data['email']
-        if User.objects.filter(email=email).exists():
+        if CustomUser.objects.filter(email=email).exists():
             raise forms.ValidationError("Este e-mail já está em uso.")
         return email
