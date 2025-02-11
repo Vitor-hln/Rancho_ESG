@@ -87,7 +87,7 @@
             <!-- Username Field -->
             <div class="mb-3">
                 <label for="id_username" class="form-label">Matrícula/Login:</label>
-                <input type="text" name="username" id="id_username" class="form-control" value="{{ form.username.value|default:'' }}">
+                <input type="text" name="username" id="id_username" class="form-control" pattern="\d+" value="{{ form.username.value|default:'' }}">
                 {% if form.username.errors %}
                     <div class="text-danger">
                         {% for error in form.username.errors %}

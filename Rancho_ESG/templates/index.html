@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rancho ESG - Cardápio da Semana</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #0d6efd;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+        .btn-pdf {
+            background-color: #dc3545;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .btn-pdf:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h1 class="display-4">Rancho ESG</h1>
+            <p class="lead">Cardápio da Semana</p>
+        </div>
+
+        <!-- Cardápio da Semana -->
+        <div class="row">
+            {% for cardapio in cardapios %}
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header text-center">
+                        {{ cardapio.get_dia_display }}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ cardapio.prato_principal }}</h5>
+                        <p class="card-text">
+                            <strong>Acompanhamentos:</strong> {{ cardapio.acompanhamentos }}<br>
+                            <strong>Sobremesa:</strong> {{ cardapio.sobremesa }}<br>
+                            <strong>Suco:</strong> {{ cardapio.suco }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Botão para Gerar PDF -->
+        <div class="text-center mt-4">
+            <a href="{% url 'gerar_pdf' %}" class="btn btn-pdf">Baixar Cardápio em PDF</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (opcional, se precisar de funcionalidades JS do Bootstrap) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

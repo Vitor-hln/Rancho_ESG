@@ -1,4 +1,6 @@
 from django import forms
+from django.core.exceptions import ValidationError
+
 from app_accounts.models import CustomUser
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import  AbstractUser
@@ -16,6 +18,10 @@ def validar_email_personalizado(value):
             _('Somente e-mails do domínio @exemplo.com são permitidos.'),
             params={'value': value},
         )"""
+def validate_username(value):
+    if not value.isdigit():
+        raise ValidationError("Este campo deve conter apenas números.")
+
 
 class RegistrationForm(UserCreationForm):
     is_menu_manager = forms.BooleanField(required=False, label="Gerente de Cardápio")
@@ -40,6 +46,7 @@ class RegistrationForm(UserCreationForm):
         label=_("Matrícula/Login"),
         max_length=10,
         widget=forms.TextInput(attrs={"id": "id_matricula", "class": "form-control"}),
+        validators=[validate_username]
     )
 
     email = forms.EmailField(
